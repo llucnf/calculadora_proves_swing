@@ -10,7 +10,9 @@ package conexio.base.de;
  *
  * @author alumne-DAM
  */
+
 import java.sql.*;
+import java.util.*;
 public class dadesframe extends javax.swing.JFrame {
 
     /**
@@ -40,6 +42,11 @@ public class dadesframe extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         GUARDAR.setText("GUARDAR");
+        GUARDAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GUARDARActionPerformed(evt);
+            }
+        });
 
         conectarseBD.setText("CONECTA");
         conectarseBD.addActionListener(new java.awt.event.ActionListener() {
@@ -85,12 +92,11 @@ public class dadesframe extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(PATH, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(PATH, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(99, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -122,9 +128,43 @@ public class dadesframe extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private Connection connectToDatabaseOrDie()
+  {
+    Connection conn = null;
+    try
+    {
+      Class.forName("org.postgresql.Driver");
+      String url = "jdbc:postgresql://desenvolupament2.xaviersastre.cat:5432/practica_cide";
+      conn = DriverManager.getConnection(url,"admin", "fritdematances");
+      System.out.println("conectat a la base de dades");
+    }
+    catch (ClassNotFoundException e)
+    {
+      e.printStackTrace();
+      System.exit(1);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+      System.exit(2);
+    }
+    return conn;
+  }
+    
+    
     private void conectarseBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectarseBDActionPerformed
         // TODO add your handling code here:
+        connectToDatabaseOrDie();
     }//GEN-LAST:event_conectarseBDActionPerformed
+
+    private void GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GUARDARActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_GUARDARActionPerformed
+public class persona{
+    int id;
+    String nom;
+    String Birthday;
+}
 
     /**
      * @param args the command line arguments
